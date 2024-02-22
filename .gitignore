@@ -2,3 +2,4 @@
 bin/App.class
 bin/classes/Hangman.class
 bin/tests/HangmanTest.class
+.vscode/launch.json
