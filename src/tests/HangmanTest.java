@@ -44,7 +44,7 @@ public class HangmanTest {
     }
 
     @Test
-    public void guessMultipel(){
+    public void guessMultiple(){
         final Hangman game = new Hangman("kitten");
 
         game.guess('t');
@@ -54,7 +54,7 @@ public class HangmanTest {
     }
 
     @Test
-    public void guessCaseInsensitiv(){
+    public void guessCaseSensitive(){
         final Hangman game = new Hangman("KITTEN");
 
         game.guess('n');
@@ -66,7 +66,7 @@ public class HangmanTest {
     }
 
     @Test
-    public void guessCaseInsensitiv2(){
+    public void guessCaseSensitive2(){
         final Hangman game = new Hangman("kitten");
 
         game.guess('N');
@@ -97,5 +97,70 @@ public class HangmanTest {
         assertFalse(game.isAlive());
     }
 
+    //if we guess the same wrong letter twice
+    //we should only lose a life once.
+    @Test
+    public void loseAllLivesRepeatedLetters(){
+        final Hangman game = new Hangman("kitten");
+
+        assertTrue(game.isAlive());
+        game.guess('Z');
+        game.guess('Z');
+        assertTrue(game.isAlive());
+        game.guess('p');
+        game.guess('P');
+        assertTrue(game.isAlive());
+        game.guess('q');
+        game.guess('z');
+        assertTrue(game.isAlive());
+        game.guess('O');
+        assertTrue(game.isAlive());
+        game.guess('æ');
+        assertTrue(game.isAlive());
+        game.guess('Å');
+
+        assertFalse(game.isAlive());
+    }
+
+    //We could implement af test
+    //that makes sure we dont lose a life, when
+    //guesing a letter that's in the array which
+    //we have already guessed.
+    
+    //corrently our implementation, already behaves
+    //in this way (I think)...
+    //what would be the reasoning behind implementing 
+    //such a test?
+
+    @Test
+    public void onlyLetterslooseLives(){
+        final Hangman game = new Hangman("qwertyuiopåasdfghjklæøzxcvbnm");
+
+        //OBS haven't tested if the test works as 
+        //intended, don't assume it just works...
+        
+        //we check all unicode symbols (16 bits)
+        assertTrue(game.isAlive());
+        for (int i = 0; i < 65536; i++){
+            game.guess((char)i);
+        }
+        
+        assertTrue(game.isWon());
+    }
+
+    //implement a test which test if we can win
+    @Test
+    public void win(){
+        final Hangman game = new Hangman("kitten");
+
+        game.guess('k');
+        game.guess('i');
+        game.guess('t');
+        game.guess('e');
+        game.guess('n');
+
+        assertTrue(game.isAlive());
+        assertTrue(game.isWon());
+    }
 
 }
