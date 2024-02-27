@@ -1,6 +1,5 @@
 package classes;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import processing.core.PApplet;
@@ -13,6 +12,8 @@ public class Hangman {
     public String[] words;
 
     private int lives = 6;
+
+    String validCharacterString = "abcdefghijklmnopqrstuvwxyzæøå";
 
     private HashSet<Character> validCharacters = new HashSet<Character>();
 
@@ -37,12 +38,9 @@ public class Hangman {
         }
 
         // add all valid characters to the set
-        for (char c = 'a'; c <= 'z'; c++) {
+        for (char c : validCharacterString.toCharArray()) {
             validCharacters.add(c);
         }
-        validCharacters.add('æ');
-        validCharacters.add('ø');
-        validCharacters.add('å');
 
     }
 
